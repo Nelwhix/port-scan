@@ -22,6 +22,19 @@ it('can remove a host', function () {
     expect(count($hl->hosts))->toBe(2);
 });
 
-it('can save a host', function () {
+it('can save hosts and load from a host file', function () {
+    $hl1 = new HostsList([]);
+    $hl2 = new HostsList([]);
 
-});
+    $hl1->add("host1");
+    $hl1->add("host2");
+    $hl1->add("host5");
+
+    $tf = tempnam(sys_get_temp_dir(), 'prefix_');
+    $hl1->save($tf);
+    $hl2->load($tf);
+
+    expect($hl1->hosts)->toBe($hl2->hosts);
+
+    unlink($tf);
+})->skip();

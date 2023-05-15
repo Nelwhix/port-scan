@@ -45,7 +45,7 @@ class HostsList
         $file = fopen($hostsFile, "w");
 
         foreach($this->hosts as $host) {
-            fwrite($file, $host);
+            fwrite($file, $host ."\n");
         }
 
         fclose($file);
