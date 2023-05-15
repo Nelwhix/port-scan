@@ -37,4 +37,4 @@ it('can save hosts and load from a host file', function () {
     expect($hl1->hosts)->toBe($hl2->hosts);
 
     unlink($tf);
-})->skip();
+});

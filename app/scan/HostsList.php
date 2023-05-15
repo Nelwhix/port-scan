@@ -34,7 +34,7 @@ class HostsList
         $file = fopen($hostsFile, "r");
 
         while (($line = fgets($file)) !== false) {
-            $this->hosts[] = $line;
+            $this->hosts[] = substr($line, 0, -1);
         }
 
         fclose($file);
