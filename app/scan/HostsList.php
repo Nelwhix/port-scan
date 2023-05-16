@@ -20,19 +20,18 @@ class HostsList
         $this->hosts[] = $host;
     }
 
-    public function remove(string $host): ?\Exception {
+    public function remove(string $host): void {
         $i = $this->search($host);
-        if ($i) {
-            array_splice($this->hosts, $i, 1);
-            return null;
+        if (!$i) {
+            throw new \Exception("Host not in the list");
         }
-        return new \Exception("Host not in the list");
+        array_splice($this->hosts, $i, 1);
     }
 
     public function load(string $hostsFile): void
     {
         $file = fopen($hostsFile, "r");
-
+        if (!$file) return;
         while (($line = fgets($file)) !== false) {
             $this->hosts[] = substr($line, 0, -1);
         }

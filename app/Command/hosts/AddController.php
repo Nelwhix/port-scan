@@ -16,7 +16,9 @@ class AddController extends CommandController
             $hostsFile = $this->getParam("hosts-file");
         }
 
-        $this->addAction($hostsFile, $this->getArgs());
+        $args = $this->getArgs();
+        array_splice($args, 0, 3);
+        $this->addAction($hostsFile, $args);
     }
 
     private function addAction(string $hostsFile, array $args)

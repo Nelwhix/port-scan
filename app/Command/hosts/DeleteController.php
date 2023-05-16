@@ -14,7 +14,9 @@ class DeleteController extends \Minicli\Command\CommandController
             $hostsFile = $this->getParam("hosts-file");
         }
 
-        $this->deleteAction($hostsFile, $this->getArgs());
+        $args = $this->getArgs();
+        array_splice($args, 0, 3);
+        $this->deleteAction($hostsFile, $args);
     }
 
     private function deleteAction(string $hostsFile, array $args)
@@ -25,12 +27,11 @@ class DeleteController extends \Minicli\Command\CommandController
         foreach ($args as $h) {
             try {
                 $hl->remove($h);
+                $this->getPrinter()->display("Deleted host: " . $h);
             } catch (\Exception) {
                 $this->getPrinter()->display("Host does not exist");
                 return;
             }
-
-            $this->getPrinter()->display("Deleted host: " . $h);
         }
 
         $hl->save($hostsFile);
