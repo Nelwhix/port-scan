@@ -1,6 +1,6 @@
 <?php
 
-use function App\Scan\Run;
+require 'vendor/autoload.php';
 
 function listenOnPort(string $host, $port): Socket {
     $socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
@@ -29,7 +29,7 @@ it('scans a host', function () {
     socket_close($conns[0]);
     socket_close($conns[1]);
 
-    $results = Run($hl, $ports);
+    $results = App\Scan\Run($hl, $ports);
     expect(count($results))->toBe(4);
     expect($results[0]->host)->toBe($host);
     expect($results[0]->notFound)->toBe(false);
