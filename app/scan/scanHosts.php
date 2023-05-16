@@ -18,21 +18,25 @@ function scanPort(string $host, int $port): PortState {
     return $p;
 }
 
+class Results {
+    public function __construct(public string $host,public array $portStates, public bool $notFound = true){}
+}
+
 function Run(HostsList $hl, array $ports): array {
+    $res = [];
     foreach($hl->hosts as $h) {
-        $r = [
-          'host' => $h
-        ];
+        $r = new Results($h, []);
         $isValid = checkdnsrr($h);
         if (!$isValid) {
-            $r[] = [
-                'notFound' => true
-            ];
+            $res[] = $r;
             continue;
         }
 
-        foreach ($ports as $port) {
-
+        foreach ($ports as $p) {
+            $r->portStates[] = scanPort($h, $p);
         }
+        $res[] = $r;
     }
+
+    return $res;
 }

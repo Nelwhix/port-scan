@@ -12,7 +12,8 @@
   "require": {
     "minicli/minicli": "^3.0",
     "minicli/command-help": "^0.1.0",
-    "symfony/var-dumper": "^6.2"
+    "symfony/var-dumper": "^6.2",
+    "ext-sockets": "*"
   },
   "require-dev": {
     "pestphp/pest": "^1.21"
