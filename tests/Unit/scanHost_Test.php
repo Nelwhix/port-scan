@@ -1,6 +1,6 @@
 <?php
 
-require_once __DIR__. '/../../app/scan/scanHosts.php';
+use function App\Scan\Run as Run;
 
 function listenOnPort(string $host, $port): Socket {
     $socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
