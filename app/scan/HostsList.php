@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Scan;
+namespace App\scan;
 
 class HostsList
 {
@@ -22,7 +22,7 @@ class HostsList
 
     public function remove(string $host): void {
         $i = $this->search($host);
-        if (!$i) {
+        if ($i === false) {
             throw new \Exception("Host not in the list");
         }
         array_splice($this->hosts, $i, 1);
@@ -30,6 +30,9 @@ class HostsList
 
     public function load(string $hostsFile): void
     {
+        if (!file_exists($hostsFile)) {
+            return;
+        }
         $file = fopen($hostsFile, "r");
         if (!$file) return;
         while (($line = fgets($file)) !== false) {

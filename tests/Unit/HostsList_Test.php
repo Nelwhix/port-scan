@@ -21,7 +21,7 @@ it('can remove a host', function () {
     $hl->remove("host1");
 
     expect(count($hl->hosts))->toBe(1);
-})->only();
+});
 
 it('throws error when you remove a host not in the list', function () {
     $hl = new HostsList([]);

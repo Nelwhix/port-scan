@@ -10,8 +10,6 @@ A CLI tool to:
 ```
 
 ## Usage
-It is still a work in progress so you use with caution:
-
 Clone the repo, PHP 8.1 is required and run
 ```bash
     composer install
@@ -32,7 +30,7 @@ Clone the repo, PHP 8.1 is required and run
     ./port-scan hosts delete localhost
 ```
 
-- WIP: Scan a host
+- Scan a host
 ```bash
     ./port-scan scan ports=8080,8000,3000
 ```

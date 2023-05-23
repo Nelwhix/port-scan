@@ -1,6 +1,6 @@
 <?php
 
-use function App\Scan\Run as checkHosts;
+use App\scan\Scan;
 
 function listenOnPort(string $host, $port): Socket {
     $socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
@@ -12,8 +12,9 @@ function listenOnPort(string $host, $port): Socket {
 
 it('scans a host', function () {
     $host = "localhost";
+
+    // adjust this depending on the ports closed on your machine
     $ports = [
-        "3000",
         "5173",
         "8000",
         "8080"
@@ -25,16 +26,18 @@ it('scans a host', function () {
     foreach ($ports as $p) {
         $conns[] = listenOnPort($host, $p);
     }
+    // close 1
+    socket_close($conns[1]);
 
-    foreach($conns as $conn) {
-        socket_close($conn);
-    }
+    $results = Scan::run($hl, $ports);
 
-    checkHosts($hl, $ports);
 
-//    $results = Run($hl, $ports);
-//    expect(count($results))->toBe(4);
-//    expect($results[0]->host)->toBe($host);
-//    expect($results[0]->notFound)->toBe(false);
-//    expect(count($results[0]->portStates))->toBe(4);
-})->only();
+    expect(count($results[0]->portStates))->toBe(3);
+
+    expect($results[0]->portStates[0]->open)->toBe(true);
+    expect($results[0]->portStates[1]->open)->toBe(false);
+    expect($results[0]->portStates[2]->open)->toBe(true);
+
+    socket_close($conns[0]);
+    socket_close($conns[2]);
+});
